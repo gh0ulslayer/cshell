@@ -1,5 +1,5 @@
 #include "header.h"
-char cwd[100];
+char homedir[100];
 
 void CD(char *inp)
 {
@@ -13,7 +13,7 @@ void CD(char *inp)
 	}
 	else if(inp[0]=='~')
 	{
-		strcpy(temp,cwd);strcat(temp,inp+1);
+		strcpy(temp,homedir);strcat(temp,inp+1);
 	}
 	else
 		strcpy(temp,inp);

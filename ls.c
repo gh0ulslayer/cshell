@@ -1,4 +1,5 @@
 #include "header.h"
+char homedir[100];
 struct dirent *dir_no;
 void perm_mode(int mode, char str[])
 {
@@ -100,6 +101,11 @@ void LS(char* tok)
 					if(temp[2]=='a')
 						aflagg++;
 				}
+			}
+			else if(temp[0]=='~')
+			{
+				printf("adsfad\n");
+				strcpy(dir[j],homedir);
 			}
 			else
 			{
