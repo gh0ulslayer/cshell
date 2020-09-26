@@ -33,7 +33,7 @@ void com_proceed(char *temp)
     } 
     i++;
   }
-  
+ 
   char *token;
   const char s[] = {" \t"};
   char comms[10][100];

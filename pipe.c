@@ -52,6 +52,7 @@ void execpipe(char arr[])
 		}
 		if (pid == 0)
 		{
+			printf("%s\n",tokens[i] );
 			com_proceed(tokens[i]);
 			exit(0);
 		}
