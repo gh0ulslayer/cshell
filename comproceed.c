@@ -26,19 +26,14 @@ void com_proceed(char *temp)
       execpipe(tempcopy);
       return;
     }
-    
-    i++;
-  }
-  while(tempcopy[i]!='\0')
-  {
-    if(tempcopy[i]=='<' || tempcopy[i]=='>')
+    else if(tempcopy[i]=='<' || tempcopy[i]=='>')
     {
       redirect(tempcopy);
       return;
-    }
-
+    } 
     i++;
   }
+  
   char *token;
   const char s[] = {" \t"};
   char comms[10][100];
