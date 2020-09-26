@@ -88,12 +88,18 @@ void redirect(char *str)
   childpid=fork();
   if(childpid==0)
   {
-  	if(flagi) dup2(fd,0);
-    if(flago) dup2(fd1,1);
+  	if(flagi)
+  	{ dup2(fd,0);
+  		close(fd);
+    }
+    if(flago)
+    { dup2(fd1,1);
+  		close(fd1);
+  	}
   	if (execvp(dod[0], dod) < 0)
-  {
+ 	{
     printf("Could not execute command\n");
-  }
+  	}
 	}
 else
 {
