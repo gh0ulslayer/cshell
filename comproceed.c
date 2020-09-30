@@ -1,19 +1,38 @@
 #include "header.h"
-void functtt(int kk)
+void functtt(int sig)
 {
-  int ll;
-  pid_t pdi;
-  pdi = waitpid(pdi, &ll, WNOHANG | WUNTRACED);
-  if (pdi > 0)
+  // printf("dwadwad\n");
+  pid_t pidn;
+  int status;
+  // pidn = wait(NULL);
+  pidn = waitpid(-1, &status, WNOHANG);
+  if (pidn > 0)
   {
-    printf("Process : %d exited .\n", pdi);
+    int j = -1;
+    for(i= 0;i< onjobs;i++)
+    {
+      if (fbjobs[i].pid == pidn)
+      {
+        j = i;
+        fbjobs[i].status = 0;
+        break;
+      }
+    }
+    if (WEXITSTATUS(status) == 0 && WIFEXITED(status) && (j != -1))
+      printf("%s with pid %d exited normally\n", fbjobs[j].job_name, fbjobs[j].pid);
+    else if (j != -1)
+      printf("%s with pid %d failed to exit normally\n", fbjobs[j].job_name, fbjobs[j].pid);
   }
+  // else
+  // {
+  //  printf("Process terminated\n");
+  // }
 }
+  onjobs = 0;
+  conjobs = 0;
 
 void com_proceed(char *temp)
 {
-  onjobs = 0;
-  conjobs = 0;
   int i = 0;
   char tempcopy[1000];
   char* newarr[1024];
@@ -80,6 +99,18 @@ void com_proceed(char *temp)
   {
     PINFO(tempcopy);
   }
+  else if (strcmp(comms[0], "setenv") == 0)
+  {
+    SETENV(tempcopy);
+  }
+  else if (strcmp(comms[0], "unsetenv") == 0)
+  {
+    UNSETENV(tempcopy);
+  }
+  else if (strcmp(comms[0], "jobs") == 0)
+  {
+   jobs();  
+  }
   else
   {
     pid_t pid;
@@ -111,16 +142,24 @@ void com_proceed(char *temp)
     if (pid > 0)
     {
       if ((strcmp(newarr[counttok - 1], "&") == 0))
+      {
+        // printf("%d\n",onjobs );
+      strcpy(fbjobs[onjobs].job_name, newarr[0]);
+
+        fbjobs[onjobs].status = 0;
         fbjobs[onjobs].pid = pid;
+      onjobs++;
+
+      }
       else
       {
-        fbjobs[onjobs].status = 0;
+        // fbjobs[onjobs].status = 0;
         waitpid(pid, &status, 0);
       }
 
-      fbjobs[onjobs].status = 1;
-      strcpy(fbjobs[onjobs].job_name, newarr[0]);
-      onjobs++;
+      //fbjobs[onjobs].status = 1;
+      //strcpy(fbjobs[onjobs].job_name, newarr[0]);
+      //onjobs++;
 
     }
     else if (pid == 0)

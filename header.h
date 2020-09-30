@@ -37,6 +37,10 @@ char homedir[100];
 int homedirlen,i,j,k;
 int a_flag[200];
 int free_flag();
+void SETENV(char *inp);
+void UNSETENV(char *inp);
+void jobs();
+
 struct group *getgrgid(), *grp_ptr;
 typedef struct {
 	char job_name[20];
@@ -44,7 +48,14 @@ typedef struct {
 	int status;
 } job;
 job fbjobs[100];
-
+struct bg_process
+{
+    int pid;
+    char proc_name[128];
+    int is_fg;
+    int is_runnig;
+    struct bg_process *next, *curr;
+};
 int onjobs ;
 int conjobs ;
 #endif
