@@ -1,6 +1,8 @@
 #include "header.h"
 char homedir[100];
+char cwd[100];
 
+char prev[100];
 void CD(char *inp)
 {
 	char *temp;
@@ -15,10 +17,15 @@ void CD(char *inp)
 	{
 		strcpy(temp,homedir);strcat(temp,inp+1);
 	}
+	else if(inp[0]=='-')
+	{
+		strcpy(temp,prev);strcat(temp,inp+1);
+	}
 	else
 		strcpy(temp,inp);
 	
 	check=chdir(temp);
+	strcpy(prev,cwd);
 	if(check<0)
 	{
 		printf("DIR not exist\n");
