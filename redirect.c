@@ -2,16 +2,15 @@
 char **get_input(char *input)
 {
   char **command = malloc(100 * sizeof(char *));
-  char *separator = " ";
-  char *parsed;
+  const char s[] = {" "};
+  char *tokk;
+  tokk = strtok(input, s);
   int index = 0;
-  parsed = strtok(input, separator);
-  while (parsed != NULL)
+  while (tokk != NULL)
   {
-    command[index] = parsed;
+    command[index] = tokk;
     index++;
-
-    parsed = strtok(NULL, separator);
+	tokk = strtok(NULL, s);
   }
   
   return command;
@@ -20,24 +19,24 @@ char **get_input(char *input)
 // function that implements redirection
 void redirect(char *str)
 {
-  int flago=0,flagi=0,fd,fd1;
-	int status;
-  char redir_commands[30][100];
-  char *token1 = strtok(str, " ");
-  int commandidx = 0;
-  while (token1 != NULL)
-  {
-    strcpy(redir_commands[commandidx++], token1);
-    token1 = strtok(NULL, " ");
-  }
-  int flag = 0;
+  char comredir[20][100];
   char command[100];
   command[0] = '\0';
-  for (int i = 0; i < commandidx; i++)
+  int flago=0,flagi=0,fd,fd1;
+	int status;
+  char *tok = strtok(str, " ");
+  int counttoken = 0;
+  while (tok != NULL)
   {
-    if (!strcmp(redir_commands[i], "<"))
+    strcpy(comredir[counttoken++], tok);
+    tok = strtok(NULL, " ");
+  }
+  int flag = 0;
+  for (int i = 0; i < counttoken; i++)
+  {
+    if (!strcmp(comredir[i], "<"))
     {
-      fd = open(redir_commands[i + 1], O_RDONLY);
+      fd = open(comredir[i + 1], O_RDONLY);
       if (fd < 0)
       {
         perror("Error opening file");
@@ -46,9 +45,9 @@ void redirect(char *str)
       flag = 1;
       i++;
     }
-    if (!strcmp(redir_commands[i], ">"))
+    if (!strcmp(comredir[i], ">"))
     {
-      fd1 = open(redir_commands[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+      fd1 = open(comredir[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
        if (fd1 < 0)
       {
         perror("Error opening file");
@@ -57,9 +56,9 @@ void redirect(char *str)
       flag = 1;
       i++;
     }
-    if (!strcmp(redir_commands[i], ">>"))
+    if (!strcmp(comredir[i], ">>"))
     {
-      fd1 = open(redir_commands[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+      fd1 = open(comredir[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
       if (fd1 < 0)
       {
         perror("Error opening file");
@@ -68,18 +67,18 @@ void redirect(char *str)
       flag = 1;
       i++;
     }
-    if (!flag)
+    if (flag==0)
     {
-      if (!strlen(command))
-      {
-        strcpy(command, redir_commands[i]);
-      }
-      else
+      if (strlen(command))
       {
         int idx = strlen(command);
         command[idx] = ' ';
         command[idx + 1] = '\0';
-        strcat(command, redir_commands[i]);
+        strcat(command, comredir[i]);
+      }
+      else
+      {	
+        strcpy(command, comredir[i]);
       }
     }
   }

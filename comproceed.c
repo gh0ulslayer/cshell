@@ -21,7 +21,10 @@ void functtt(int sig)
     if (WEXITSTATUS(status) == 0 && WIFEXITED(status) && (j != -1))
       printf("%s with pid %d exited normally\n", fbjobs[j].job_name, fbjobs[j].pid);
     else if (j != -1)
+    {
+      fbjobs[j].status=-1;
       printf("%s with pid %d failed to exit normally\n", fbjobs[j].job_name, fbjobs[j].pid);
+    }
   }
   // else
   // {
@@ -110,6 +113,18 @@ void com_proceed(char *temp)
   else if (strcmp(comms[0], "jobs") == 0)
   {
    jobs();  
+  }
+  else if (strcmp(comms[0], "kjob") == 0)
+  {
+   kjob(tempcopy);  
+  }
+  else if (strcmp(comms[0], "overkill") == 0)
+  {
+    OVERKILL();
+  }
+  else if (strcmp(comms[0], "fg") == 0)
+  {
+    //fg(tempcopy);
   }
   else
   {

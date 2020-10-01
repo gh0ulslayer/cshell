@@ -1,22 +1,16 @@
 #include "header.h"
-int proc_cnt = 1;
-char homedir[100];
-// function to print all jobs running in background
 void jobs()
 {
   //printf("%d\n",onjobs );
-  //struct bg_process *temp=homedir;
-  for(int i=0;i<onjobs;i++)
+  for(int i=0;i<onjobs;i++) 
   {
-  
+    if(fbjobs[i].status!=-1)
+    {
     int pid;
     pid=fbjobs[i].pid;
-    // pid= temp->pid;
     char name[1000];
     name[0] = '\0';
-    strcpy(name, fbjobs[i].job_name)  ;
-
-    //strcpy(name, temp->proc_name);
+    strcpy(name, fbjobs[i].job_name);
     char path[1000];
     sprintf(path, "/proc/%d/status", pid);
     int fd = open(path, O_RDONLY);
@@ -28,13 +22,12 @@ void jobs()
     char *token1 = strtok(token, " ");
     if (token1[strlen(token1) - 1] == 'S')
     {
-      printf("[%d] Running %s [%d]\n", proc_cnt, name, pid);
+      printf("[%d] Running %s [%d]\n", i+1, name, pid);
     }
     if (token1[strlen(token1) - 1] == 'T')
     {
-      printf("[%d] Stopped %s [%d]\n", proc_cnt, name, pid);
+      printf("[%d] Stopped %s [%d]\n", i+1, name, pid);
     }
-    proc_cnt++;
-    //temp = temp->next;
+    }
   }
 }

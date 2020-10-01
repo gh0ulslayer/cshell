@@ -40,7 +40,8 @@ int free_flag();
 void SETENV(char *inp);
 void UNSETENV(char *inp);
 void jobs();
-
+void kjob(char* temp);
+void OVERKILL();
 struct group *getgrgid(), *grp_ptr;
 typedef struct {
 	char job_name[20];

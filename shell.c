@@ -1,6 +1,11 @@
 #include "header.h"
+void CtrlZ(int sig)
+{
+	return;
+}
 int main(int argc, char* argv[])
 {
+	signal(SIGTSTP, CtrlZ);
 	getcwd(homedir, 100);
 	int homedirlen=strlen(homedir),i,j;
 	//printf("%d\n",homedirlen);
@@ -10,6 +15,7 @@ int main(int argc, char* argv[])
 	gethostname(host, 100);
 	while(1)
 	{
+
 		char msg[100];
 		for(i=0;i<100;i++)
 			a_flag[i]=0;

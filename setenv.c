@@ -1,6 +1,9 @@
 #include "header.h"
 void SETENV(char *inp)
 {
+    char *argument;
+    char *tempoo;
+
     int i;
     char **arr, *temp, *rest = (char*)malloc(sizeof(char)*1024);
     rest=inp;
@@ -12,7 +15,7 @@ void SETENV(char *inp)
     {
         strcpy(arr[i], temp);
         i++;
-        if (i > 2)
+        if (i > 2) 
             break;
     }
     //Error handling....
