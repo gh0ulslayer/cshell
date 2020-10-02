@@ -170,13 +170,20 @@ void com_proceed(char *temp)
       }
       else
       {
-        // fbjobs[onjobs].status = 0;
-        waitpid(pid, &status, WUNTRACED);
-      }
 
-      //fbjobs[onjobs].status = 1;
-      //strcpy(fbjobs[onjobs].job_name, newarr[0]);
-      //onjobs++;
+      strcpy(fbjobs[onjobs].job_name, newarr[0]);
+
+        fbjobs[onjobs].status = 1;
+        fbjobs[onjobs].pid = pid;
+        onjobs++;
+        
+        waitpid(pid, &status, WUNTRACED);
+        if (WIFSTOPPED(status))
+            {
+                fbjobs[onjobs - 1].status = 0;
+            }
+
+      }
 
     }
     else if (pid == 0)

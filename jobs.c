@@ -4,8 +4,10 @@ void jobs()
   //printf("%d\n",onjobs );
   for(int i=0;i<onjobs;i++) 
   {
-    if(fbjobs[i].status!=-1)
+   // printf("%d\n",fbjobs[i].status );
+    if(fbjobs[i].status==0)
     {
+
     int pid;
     pid=fbjobs[i].pid;
     char name[1000];

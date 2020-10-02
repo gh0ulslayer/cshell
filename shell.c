@@ -1,10 +1,8 @@
 #include "header.h"
 void CtrlZ(int sig)
 {
-	int x=onjobs;
-	pid_t pid = getpid();
-	fbjobs[x].pid = curfg;
-	x++;
+	fbjobs[onjobs-1].status=0;
+	//printf("asdfadfas\n");
 	return;
 }
 
