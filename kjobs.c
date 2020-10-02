@@ -3,7 +3,7 @@ void kjob(char *str)
 {
   char* tok;
   char flag[10][100];
-  const char s[]={" \t"};
+  const char s[]={" \t\n"};
   tok=strtok(str,s);
   i=0;
   int counttoken=0;
@@ -26,5 +26,6 @@ void kjob(char *str)
   }
   pid=fbjobs[pidno-1].pid;
   kill(pid,sig);
+  if(sig==9)
   fbjobs[pidno-1].status=-1;
 }

@@ -4,7 +4,7 @@ void fg(char *token)
 	int arg, c = 0, f = 0, j = 0;
 	int status;
 	char* tok;
-	const char s[]={" \t"};
+	const char s[]={" \t\n"};
 	char asdf[10][100];
 	tok=strtok(token,s);
 	i=0;int counttoken=0;
@@ -48,12 +48,10 @@ void fg(char *token)
 	pid_t shellpid = getpid();
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
-	curfg=fbjobs[arg - 1].pid;
 	//printf("%d\n",curfg );
-	strcpy(commdnameee,fbjobs[arg-1].job_name);
-	//printf("%s\n",commdnameee );
 	tcsetpgrp(0, getpgid(fbjobs[arg - 1].pid));
 	kill(fbjobs[arg - 1].pid, SIGCONT);
+	//printf("%s\n",commdnameee );
 	waitpid(fbjobs[arg - 1].pid, &status, WUNTRACED);
 	tcsetpgrp(0, shellpid);
 	signal(SIGTTOU, SIG_DFL);

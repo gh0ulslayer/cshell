@@ -80,8 +80,8 @@ void fileinfoo(char *filename, struct stat *info_p)
 void LS(char* tok)
 {
 	int lflagg=0, aflagg=0, j=0;
-	char *temp=strtok(tok," ");
-	temp=strtok(NULL, " \t");
+	char *temp=strtok(tok," \n");
+	temp=strtok(NULL, " \t\n");
 	char dir[1024][1024];
 	
 	while(temp!=NULL)
@@ -119,7 +119,7 @@ void LS(char* tok)
 			j++;
 		}
 		
-		temp=strtok(NULL, " ");
+		temp=strtok(NULL, " \n");
 	}
 	int length=j;
 	if(lflagg==0)

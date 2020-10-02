@@ -1,10 +1,8 @@
 #include "header.h"
 void functtt(int sig)
 {
-  // printf("dwadwad\n");
   pid_t pidn;
   int status;
-  // pidn = wait(NULL);
   pidn = waitpid(-1, &status, WNOHANG);
   if (pidn > 0)
   {
@@ -26,13 +24,9 @@ void functtt(int sig)
       printf("%s with pid %d failed to exit normally\n", fbjobs[j].job_name, fbjobs[j].pid);
     }
   }
-  // else
-  // {
-  //  printf("Process terminated\n");
-  // }
+ 
 }
   onjobs = 0;
-  conjobs = 0;
 
 void com_proceed(char *temp)
 {
@@ -62,7 +56,7 @@ void com_proceed(char *temp)
     i++;
   } 
   char *token;
-  const char s[] = {" \t"};
+  const char s[] = {" \t\n"};
   char comms[10][100];
   char* tok;
   tok = strtok(temp, s);
@@ -141,7 +135,7 @@ void com_proceed(char *temp)
     char *token;
     //const char s[] = {" \n"};
     char* tok;
-    tok = strtok(tempcopy, " ");
+    tok = strtok(tempcopy, " \n");
     i = 0;
     int flag = 1;
     int counttok = 0;
@@ -155,7 +149,7 @@ void com_proceed(char *temp)
       counttok++;
       //printf("%s\n", tok );
       //fflush(NULL);
-      tok = strtok(NULL, " ");
+      tok = strtok(NULL, " \n");
     }
 //            printf("%s\n",comms[1] );
     //          printf("%d\n",strlen(comms[1]));
@@ -167,17 +161,17 @@ void com_proceed(char *temp)
       if ((strcmp(newarr[counttok - 1], "&") == 0))
       {
         // printf("%d\n",onjobs );
-      strcpy(fbjobs[onjobs].job_name, newarr[0]);
+        strcpy(fbjobs[onjobs].job_name, newarr[0]);
 
         fbjobs[onjobs].status = 0;
         fbjobs[onjobs].pid = pid;
-      onjobs++;
+        onjobs++;
 
       }
       else
       {
         // fbjobs[onjobs].status = 0;
-        waitpid(pid, &status, 0);
+        waitpid(pid, &status, WUNTRACED);
       }
 
       //fbjobs[onjobs].status = 1;

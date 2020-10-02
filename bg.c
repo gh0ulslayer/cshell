@@ -3,7 +3,7 @@ void bg(char *token)
 {
 	int arg, c = 0, f = 0, j=0;
 	char* tok;
-	const char s[]={" \t"};
+	const char s[]={" \t\n"};
 	char asdf[10][100];
 	tok=strtok(token,s);
 	i=0;int counttoken=0;
@@ -39,7 +39,7 @@ void bg(char *token)
 		perror("Invalid argument\n");
 		return;
 	}
-	printf("asdfadf\n");
+//	printf("asdfadf\n");
 	kill(fbjobs[j].pid, SIGCONT);
-	printf("adsfadfa\n");
+//	printf("adsfadfa\n");
 }

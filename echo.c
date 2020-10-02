@@ -7,7 +7,7 @@ void ECHO(char * str1)
     char *temp=(char * )calloc(1024,sizeof(char));
     char *ans=(char *)calloc(1024, sizeof(char));
     
-    while(temp=strtok_r(str1," \t",&str1))
+    while(temp=strtok_r(str1," \t\n",&str1))
     {
         strcpy(str,ans);
         sprintf(ans,"%s %s",ans,temp);

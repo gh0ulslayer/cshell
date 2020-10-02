@@ -3,7 +3,7 @@ void SETENV(char *temp)
 {
     char* tok;
     char flag[10][100];
-    const char s[]={" \t"};
+    const char s[]={" \t\n"};
     tok=strtok(temp,s);
     i=0;int counttoken=0;
     while(tok!=NULL)

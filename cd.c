@@ -19,6 +19,15 @@ void CD(char *inp)
 	}
 	else if(inp[0]=='-')
 	{
+		if(prev!=NULL)
+		{
+		}
+		else
+		{
+			for(int k=0;k<strlen(homedir);k++)
+				prev[k]=homedir[k];
+		}
+		printf("%s\n",prev);
 		strcpy(temp,prev);strcat(temp,inp+1);
 	}
 	else

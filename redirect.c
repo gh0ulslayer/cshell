@@ -40,6 +40,7 @@ void redirect(char *str)
       if (fd < 0)
       {
         perror("Error opening file");
+        return;
       }
       else flagi=1;
       flag = 1;
@@ -51,6 +52,7 @@ void redirect(char *str)
        if (fd1 < 0)
       {
         perror("Error opening file");
+        return;
       }
       else flago=1;
       flag = 1;
@@ -62,6 +64,7 @@ void redirect(char *str)
       if (fd1 < 0)
       {
         perror("Error opening file");
+        return;
       }
       else flago=1;
       flag = 1;
@@ -98,6 +101,7 @@ void redirect(char *str)
   	if (execvp(dod[0], dod) < 0)
  	{
     printf("Could not execute command\n");
+    return;
   	}
 	}
 else

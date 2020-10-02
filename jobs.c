@@ -16,10 +16,10 @@ void jobs()
     int fd = open(path, O_RDONLY);
     char buff[200];
     read(fd, buff, 190);
-    char *token = strtok(buff, "\n");
-    token = strtok(NULL, "\n");
-    token = strtok(NULL, "\n");
-    char *token1 = strtok(token, " ");
+    char *token = strtok(buff, " \n");
+    token = strtok(NULL, " \n");
+    token = strtok(NULL, " \n");
+    char *token1 = strtok(token, " \n");
     if (token1[strlen(token1) - 1] == 'S')
     {
       printf("[%d] Running %s [%d]\n", i+1, name, pid);

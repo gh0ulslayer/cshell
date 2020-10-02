@@ -3,7 +3,7 @@ void UNSETENV(char *temp)
 {
     char* tok;
     char flag[10][100];
-    const char s[]={" \t"};
+    const char s[]={" \t\n"};
     tok=strtok(temp,s);
     i=0;int counttoken=0;
     while(tok!=NULL)
@@ -12,7 +12,7 @@ void UNSETENV(char *temp)
         i++;counttoken++;
         tok=strtok(NULL,s);
     }
-    printf("%s\n",flag[1] );
+ //   printf("%s\n",flag[1] );
   if(counttoken>2 || counttoken<=1)
   {
     printf("Invalid no of arguments\n");

@@ -8,7 +8,7 @@ void PINFO(char *spid)
     char *token;
     
     char *path = (char *)calloc(sizeof(char), 128);
-    	const char s[] = {" \t"}; 
+    	const char s[] = {" \t\n"}; 
       		char comms[10][100];
       		char* tok; 
       		tok = strtok(spid, s); 
@@ -55,7 +55,7 @@ void PINFO(char *spid)
     char *rest = buff;
     char *data;
     realpath(ex_path, Exe_path);
-    while (data=strtok_r(rest, " ", &rest))
+    while (data=strtok_r(rest, " \n", &rest))
     {
         if (i == 2)
             strcpy(status, data);
