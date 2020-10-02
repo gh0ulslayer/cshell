@@ -45,15 +45,19 @@ void fg(char *token)
 		printf("No valid process exists\n");
 		return;
 	}
-	pid_t shellpid = getpid();
+	pid_t pidsh = getpid();
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
-	//printf("%d\n",curfg );
-	tcsetpgrp(0, getpgid(fbjobs[arg - 1].pid));
-	kill(fbjobs[arg - 1].pid, SIGCONT);
-	//printf("%s\n",commdnameee );
-	waitpid(fbjobs[arg - 1].pid, &status, WUNTRACED);
-	tcsetpgrp(0, shellpid);
+	int curfg=fbjobs[arg - 1].pid;
+	
+	tcsetpgrp(0, getpgid(curfg));
+	
+	kill(curfg, SIGCONT);
+	
+	waitpid(curfg, &status, WUNTRACED);
+	
+	tcsetpgrp(0, pidsh);
+	
 	signal(SIGTTOU, SIG_DFL);
 	signal(SIGTTIN, SIG_DFL);
 

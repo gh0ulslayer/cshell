@@ -1,9 +1,8 @@
 #include "header.h"
 void functtt(int sig)
 {
-  pid_t pidn;
   int status;
-  pidn = waitpid(-1, &status, WNOHANG);
+  pid_t pidn = waitpid(-1, &status, WNOHANG);
   if (pidn > 0)
   {
     int j = -1;
@@ -16,12 +15,15 @@ void functtt(int sig)
         break;
       }
     }
-    if (WEXITSTATUS(status) == 0 && WIFEXITED(status) && (j != -1))
-      printf("%s with pid %d exited normally\n", fbjobs[j].job_name, fbjobs[j].pid);
-    else if (j != -1)
+    if (j != -1)
     {
-      fbjobs[j].status=-1;
-      printf("%s with pid %d failed to exit normally\n", fbjobs[j].job_name, fbjobs[j].pid);
+      if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
+      printf("%s having pid %d exited normally\n", fbjobs[j].job_name, fbjobs[j].pid);
+      else
+      {
+        fbjobs[j].status=-1;
+        printf("%s having pid %d failed to exit normally\n", fbjobs[j].job_name, fbjobs[j].pid);
+      }
     }
   }
  

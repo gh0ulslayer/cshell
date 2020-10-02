@@ -1,7 +1,7 @@
 #include "header.h"
 void bg(char *token)
 {
-	int arg, c = 0, f = 0, j=0;
+	int arg, c = 0, flag = 0, j=0;
 	char* tok;
 	const char s[]={" \t\n"};
 	char asdf[10][100];
@@ -30,13 +30,13 @@ void bg(char *token)
 		if (fbjobs[i].status == 0)c++;
 		if (c == arg)
 		{
-			f = 1;j = i;
+			flag++;j = i;
 			break;
 		}
 	}
-	if (f == 0)
+	if (!flag)
 	{
-		perror("Invalid argument\n");
+		perror("Invalid argument passed\n");
 		return;
 	}
 //	printf("asdfadf\n");

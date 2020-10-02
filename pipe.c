@@ -2,7 +2,10 @@
 void execpipe(char arr[])
 {
 	int stdin = 0, stdout = 1;
+	stdout = dup(1);
+	stdin = dup(0);
 	int len = strlen(arr);
+	int all_fds[30][2];
 	int c = 0;
 	for(i= 0;i< len;i++)
 	{
@@ -11,38 +14,36 @@ void execpipe(char arr[])
 	}
 	char tokens[c + 1][100];
 	char *ptr = strtok(arr, "|\n");
-	for(i= 0;i< c + 1;i++)
+	for(i= 0;i<= c;i++)
 	{
 		strcpy(tokens[i], ptr);
 		ptr = strtok(NULL, "|\n");
 	}
-	int fdes[20][2];
-	stdout = dup(1);
-	stdin = dup(0);
-	for(i= 0;i< c + 1;i++)
+	for(i= 0;i<= c;i++)
 	{
-		if (pipe(fdes[i]) < 0) //change
+
+		int thison=all_fds[i-1][0];
+
+		if (pipe(all_fds[i]) < 0)
 		{
-			perror("Pipe Failed!!\n");
+			perror("Piping Process Failed!\n");
 			exit(0);
 		}
 		if (i == c)
 		{
-			dup2(fdes[i - 1][0], 0);
-			dup2(stdout, 1);
-			close(fdes[i - 1][0]);
+			dup2(thison, 0);dup2(stdout, 1);
+			close(thison);
 		}
 		else if (i == 0)
 		{
-			dup2(fdes[i][1], 1);
-			close(fdes[i][1]);
+			dup2(all_fds[i][1], 1);
+			close(all_fds[i][1]);
 		}
 		else
 		{
-			dup2(fdes[i - 1][0], 0);
-			dup2(fdes[i][1], 1);
-			close(fdes[i - 1][0]);
-			close(fdes[i][1]);
+			//printf("%s\n",all_fds[i-1][0] );
+			dup2(thison, 0);dup2(all_fds[i][1], 1);
+			close(thison);close(all_fds[i][1]);
 		}
 		int pid = fork();
 		if (pid < 0)
@@ -53,8 +54,7 @@ void execpipe(char arr[])
 		if (pid)
 		{
 			wait(NULL);
-			dup2(stdin, 0);
-			dup2(stdout, 1);
+			dup2(stdin, 0);dup2(stdout, 1);
 		}
 		else
 		{

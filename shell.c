@@ -2,7 +2,7 @@
 void CtrlZ(int sig)
 {
 	fbjobs[onjobs-1].status=0;
-	//printf("asdfadfas\n");
+	//printf("Pushed\n");
 	return;
 }
 
