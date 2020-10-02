@@ -1,45 +1,31 @@
 #include "header.h"
-void SETENV(char *inp)
+void SETENV(char *temp)
 {
-    char *argument;
-    char *tempoo;
-
-    int i;
-    char **arr, *temp, *rest = (char*)malloc(sizeof(char)*1024);
-    rest=inp;
-    arr = (char **)malloc(sizeof(char *) * 3);
-    for (i = 0; i < 3; i++)
-        arr[i] = (char *)malloc(sizeof(char) * 128);
-    i = 0;
-    while (temp = strtok_r(rest, " ", &rest))
+    char* tok;
+    char flag[10][100];
+    const char s[]={" \t"};
+    tok=strtok(temp,s);
+    i=0;int counttoken=0;
+    while(tok!=NULL)
     {
-        strcpy(arr[i], temp);
-        i++;
-        if (i > 2) 
-            break;
+        strcpy(flag[i],tok);
+        i++;counttoken++;
+        tok=strtok(NULL,s);
     }
-    //Error handling....
-    if (i < 1)
-    {
-        printf("Error wrong no. of args for setenv....\n");
-        return;
-    }
-    else if (i > 2)
-    {
-        printf("Error wrong no. of args for setenv.....\n");
-        return;
-    }
-    int ret;
-    //using setenv to set environment variables.....
-    if(i==1)
-    {
-        arr[1][0]='\0';
-        ret=setenv(arr[0],arr[1],1);
-    }
-    else 
-    {
-        ret=setenv(arr[0],arr[1],1);
-    }
-    if(ret==-1)
-    printf("Error while setting variable.....\n");
+  char *tempp = getenv(flag[1]);
+   // printf("%s\n",flag[1] );
+  if(counttoken<2 || counttoken>3)
+  {
+    printf("Invalid no of arguments\n");
+    return;
+  }
+  if (!tempp)
+  {
+    putenv(flag[1]);
+    setenv(flag[1], flag[2], 1);
+  }
+  else
+  {
+    setenv(flag[1], flag[2], 1);
+  }
 }

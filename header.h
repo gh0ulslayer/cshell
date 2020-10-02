@@ -57,6 +57,9 @@ struct bg_process
     int is_runnig;
     struct bg_process *next, *curr;
 };
-int onjobs ;
+void fg(char* temp);
+void bg(char* temp);
+char* commdnameee;
+int onjobs,curfg ;
 int conjobs ;
 #endif

@@ -1,10 +1,32 @@
 #include "header.h"
 void CtrlZ(int sig)
 {
+	strcpy(fbjobs[onjobs].job_name,commdnameee);
+	pid_t pid = getpid();
+	fbjobs[onjobs].pid = curfg;
+	onjobs++;
+	printf("%s with PID %d pushed to background.\n",fbjobs[onjobs].job_name,fbjobs[onjobs-1].pid);
 	return;
 }
+
+void CtrlC(int sig)
+{
+	for(int i=0;i<onjobs;i++)
+	{
+		pid_t pid = getpid();
+		if(fbjobs[i].pid==pid)
+		{
+			exit(0);
+			return;
+		}
+	}
+	return;
+}
+
 int main(int argc, char* argv[])
 {
+	signal(SIGINT, CtrlC);
+
 	signal(SIGTSTP, CtrlZ);
 	getcwd(homedir, 100);
 	int homedirlen=strlen(homedir),i,j;
@@ -15,6 +37,7 @@ int main(int argc, char* argv[])
 	gethostname(host, 100);
 	while(1)
 	{
+		//printf("%d\n", curfg);
 
 		char msg[100];
 		for(i=0;i<100;i++)

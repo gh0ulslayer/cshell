@@ -124,7 +124,15 @@ void com_proceed(char *temp)
   }
   else if (strcmp(comms[0], "fg") == 0)
   {
-    //fg(tempcopy);
+    fg(tempcopy);
+  }
+  else if (strcmp(comms[0], "bg") == 0)
+  {
+    bg(tempcopy);
+  }
+  else if (strcmp(comms[0], "quit") == 0)
+  {
+    exit(0);
   }
   else
   {

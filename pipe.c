@@ -50,17 +50,17 @@ void execpipe(char arr[])
 			perror("fork failed");
 			exit(0);
 		}
-		if (pid == 0)
-		{
-			//printf("%s\n",tokens[i] );
-			com_proceed(tokens[i]);
-			exit(0);
-		}
-		else
+		if (pid)
 		{
 			wait(NULL);
 			dup2(stdin, 0);
 			dup2(stdout, 1);
+		}
+		else
+		{
+			//printf("%s\n",tokens[i] );
+			com_proceed(tokens[i]);
+			exit(0);
 		}
 	}
 }
